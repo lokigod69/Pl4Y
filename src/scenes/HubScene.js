@@ -92,6 +92,8 @@ export default class HubScene extends Phaser.Scene {
     loadGame(id) {
         if (id === 'gravity-garden') {
             this.scene.start('GravityGardenScene');
+        } else if (id === 'echo-snake') {
+            this.scene.start('EchoSnakeScene');
         } else {
             // Placeholder
             console.log(`${id.toUpperCase()} coming soon!`);

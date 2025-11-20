@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import HubScene from './scenes/HubScene.js';
 import GravityGardenScene from './scenes/GravityGardenScene.js';
+import EchoSnakeScene from './scenes/EchoSnakeScene.js';
 import './style.css';
 
 window.themes = [
@@ -52,7 +53,7 @@ const config = {
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   backgroundColor: '#000011',
-  scene: [HubScene, GravityGardenScene]
+  scene: [HubScene, GravityGardenScene, EchoSnakeScene]
 };
 
 const game = new Phaser.Game(config);
