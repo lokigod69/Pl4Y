@@ -28,7 +28,8 @@ export default class HubScene extends Phaser.Scene {
             { id: 'gravity-garden', name: 'Gravity\nGarden' },
             { id: 'echo-snake', name: 'Echo\nSnake' },
             { id: 'void-jumper', name: 'Void\nJumper' },
-            { id: 'synesthesia-rain', name: 'Rain' }
+            { id: 'synesthesia-rain', name: 'Rain' },
+            { id: 'impossible-corridor', name: 'Impossible\nCorridor' }
         ];
 
         this.createPortals();
@@ -87,6 +88,19 @@ export default class HubScene extends Phaser.Scene {
         });
         this.themeText.setColor(Phaser.Display.Color.ValueToColor(theme.text).rgba);
         if (this.emitter) this.emitter.setTintFill(theme.accent);
+
+        // Ensure audio context is running
+        if (Tone.getContext().state !== 'running') {
+            Tone.start();
+        }
+        if (!window.ambientLoop) {
+            this.startAmbient();
+        }
+
+        // Visual feedback
+        if (this.input.activePointer) {
+            this.emitter.explode(20, this.input.activePointer.x, this.input.activePointer.y);
+        }
     }
 
     loadGame(id) {
@@ -94,8 +108,13 @@ export default class HubScene extends Phaser.Scene {
             this.scene.start('GravityGardenScene');
         } else if (id === 'echo-snake') {
             this.scene.start('EchoSnakeScene');
+        } else if (id === 'void-jumper') {
+            this.scene.start('VoidJumperScene');
+        } else if (id === 'synesthesia-rain') {
+            this.scene.start('SynesthesiaRainScene');
+        } else if (id === 'impossible-corridor') {
+            this.scene.start('ImpossibleCorridorScene');
         } else {
-            // Placeholder
             console.log(`${id.toUpperCase()} coming soon!`);
         }
     }

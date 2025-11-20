@@ -2,6 +2,9 @@ import Phaser from 'phaser';
 import HubScene from './scenes/HubScene.js';
 import GravityGardenScene from './scenes/GravityGardenScene.js';
 import EchoSnakeScene from './scenes/EchoSnakeScene.js';
+import VoidJumperScene from './scenes/VoidJumperScene.js';
+import SynesthesiaRainScene from './scenes/SynesthesiaRainScene.js';
+import ImpossibleCorridorScene from './scenes/ImpossibleCorridorScene.js';
 import './style.css';
 
 window.themes = [
@@ -53,7 +56,7 @@ const config = {
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   backgroundColor: '#000011',
-  scene: [HubScene, GravityGardenScene, EchoSnakeScene]
+  scene: [HubScene, GravityGardenScene, EchoSnakeScene, VoidJumperScene, SynesthesiaRainScene, ImpossibleCorridorScene]
 };
 
 const game = new Phaser.Game(config);
