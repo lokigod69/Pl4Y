@@ -92,7 +92,10 @@ export default class HubScene extends Phaser.Scene {
             text.setFill(Phaser.Display.Color.ValueToColor(theme.text).rgba);
         });
         this.themeText.setColor(Phaser.Display.Color.ValueToColor(theme.text).rgba);
-        if (this.emitter) this.emitter.setTint(theme.accent);
+        if (this.emitter) {
+            this.emitter.particleTint = theme.accent;
+            this.emitter.forEachAlive((p) => p.tint = theme.accent);
+        }
 
         // Visual feedback
         if (this.input.activePointer) {
