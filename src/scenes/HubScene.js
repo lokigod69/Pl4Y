@@ -39,6 +39,11 @@ export default class HubScene extends Phaser.Scene {
         this.input.on('pointermove', this.onPointerMove, this);
 
         this.updateTheme();
+
+        this.clickToStartText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, 'Click to Start', {
+            fontSize: '48px', fill: '#ffffff', backgroundColor: '#00000088', padding: { x: 20, y: 10 }
+        }).setOrigin(0.5).setDepth(100);
+
         this.add.text(50, 50, 'Pl4y', { fontSize: '64px', fill: '#ffffff' }).setDepth(5);
     }
 
@@ -87,15 +92,7 @@ export default class HubScene extends Phaser.Scene {
             text.setFill(Phaser.Display.Color.ValueToColor(theme.text).rgba);
         });
         this.themeText.setColor(Phaser.Display.Color.ValueToColor(theme.text).rgba);
-        if (this.emitter) this.emitter.setTintFill(theme.accent);
-
-        // Ensure audio context is running
-        if (Tone.getContext().state !== 'running') {
-            Tone.start();
-        }
-        if (!window.ambientLoop) {
-            this.startAmbient();
-        }
+        if (this.emitter) this.emitter.setTint(theme.accent);
 
         // Visual feedback
         if (this.input.activePointer) {
@@ -119,12 +116,15 @@ export default class HubScene extends Phaser.Scene {
         }
     }
 
-    onPointerDown() {
-        if (Tone.getContext().state !== 'running') {
-            Tone.start();
+    async onPointerDown() {
+        if (Tone.context.state !== 'running') {
+            await Tone.start();
+            console.log('Audio unlocked');
         }
-        if (!window.ambientLoop) {
+        if (!window.ambientStarted) {
             this.startAmbient();
+            window.ambientStarted = true;
+            if (this.clickToStartText) this.clickToStartText.destroy();
         }
         this.emitter.explode(20, this.input.activePointer.x, this.input.activePointer.y);
     }
